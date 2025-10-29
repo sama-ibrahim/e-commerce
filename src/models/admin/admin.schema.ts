@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Types } from 'mongoose';
 
 @Schema({
   timestamps: true,
@@ -6,6 +7,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
   toJSON: { virtuals: true },
 })
 export class Admin {
+
+  readonly _id:Types.ObjectId;
 
   userName: string;
   email: string;

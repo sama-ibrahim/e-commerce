@@ -6,15 +6,16 @@ import { Types } from 'mongoose';
   discriminatorKey: 'role',
   toJSON: { virtuals: true },
 })
-export class Seller {
+export class Customer {
   readonly _id:Types.ObjectId;
   
   userName: string;
   email: string;
   password: string;
 
-  @Prop({type:String , required:true})
-  whatsappLink:string;
+  @Prop({type:Date})
+  dob:Date;
+ 
 }
 
-export const sellerSchema = SchemaFactory.createForClass(Seller);
+export const customerSchema = SchemaFactory.createForClass(Customer);
