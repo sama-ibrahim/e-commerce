@@ -20,6 +20,24 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths":{
+      "@models/*" :[
+        "src/models/*"
+      ],
+      "@shared/*":[
+          "src/shared/*"
+      ],
+      "@modules/*":[
+        "src/modules/*"
+      ],
+      "@config/*":[
+        "src/config/*"
+      ],
+      "@common/*":[
+        "src/common/*"
+      ]
+    }
+
   }
 }

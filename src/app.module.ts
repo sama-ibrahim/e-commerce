@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './modules/auth/auth.module';
-import { ProductModule } from './modules/product/product.module';
-import { CategoryModule } from './modules/category/category.module';
-import { BrandModule } from './modules/brand/brand.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import devConfig from './config/env/dev.config';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Admin, adminSchema, Seller, sellerSchema, User, userSchema } from './models';
+import { AuthModule } from './modules/auth/auth.module';
+import { BrandModule } from './modules/brand/brand.module';
+import { CategoryModule } from './modules/category/category.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [

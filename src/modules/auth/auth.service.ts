@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { CustomerRepository } from 'src/models';
+import { CustomerRepository } from '@models/index';
 
 @Injectable()
 export class AuthService {
