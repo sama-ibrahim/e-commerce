@@ -23,21 +23,21 @@ import { Admin, adminSchema, Seller, sellerSchema, User, userSchema } from './mo
       }),
     }),
 
-    MongooseModule.forFeature([
-      { name: User.name, schema: userSchema,
-         discriminators: [
-          {
-            name:Admin.name,
-            schema:adminSchema,
+    // MongooseModule.forFeature([
+    //   { name: User.name, schema: userSchema,
+    //      discriminators: [
+    //       {
+    //         name:Admin.name,
+    //         schema:adminSchema,
 
-          },
-          {
-            name:Seller.name,
-            schema:sellerSchema,
-          }
+    //       },
+    //       {
+    //         name:Seller.name,
+    //         schema:sellerSchema,
+    //       }
 
-        ] },
-    ]),
+    //     ] },
+    // ]),
 
     AuthModule,
     ProductModule,
