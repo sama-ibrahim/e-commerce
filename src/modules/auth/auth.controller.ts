@@ -1,36 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDTO } from './dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
- 
-@Controller('auth')
+import { AuthFactoryService } from './factory';
 
+@Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly authFactoryService: AuthFactoryService,
+  ) {}
 
   @Post('/register')
-  register(@Body() registerDTO: RegisterDTO) {
-    return {message:'welcome'}
-    return this.authService.register(registerDTO);
-  }
-
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  async register(@Body() registerDTO: RegisterDTO) {
+    const customer = await this.authFactoryService.createCustomer(registerDTO);
+    const createdCustomer = await this.authService.register(customer);
+    return {
+      message: 'customer registered successfully ',
+      success: true,
+      data: createdCustomer,
+    };
   }
 }

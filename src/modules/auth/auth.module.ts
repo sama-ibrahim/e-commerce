@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { UserMongoModule } from '@shared/index';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from '@common/filters';
+import { AuthFactoryService } from './factory';
 
 @Module({
   imports : [
@@ -12,6 +13,6 @@ import { HttpExceptionFilter } from '@common/filters';
   controllers: [AuthController],
   providers: [AuthService , 
     // {provide : APP_FILTER, useClass :HttpExceptionFilter}
-     ],
+              AuthFactoryService],
 })
 export class AuthModule {}

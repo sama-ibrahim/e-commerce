@@ -17,6 +17,15 @@ export class User{
     @Prop({type:String,  required:true, })
     password:string;
 
+
+    @Prop({type:String })
+    otp:string;
+
+    @Prop({type:Date })
+    otpExpiry:Date;
+
+   @Prop({typr:Boolean , default:false})
+   isVerified :boolean;
 }
 
 export const userSchema = SchemaFactory.createForClass(User);
