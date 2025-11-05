@@ -14,7 +14,12 @@ export class User{
     @Prop({type:String,  required:true, unique:true})
     email:string;
 
-    @Prop({type:String,  required:true, })
+    @Prop({type:String,  required:function (){
+        if(this.userAgent=="google"){
+       return false
+        }
+        return true
+    } })
     password:string;
 
 
@@ -24,8 +29,12 @@ export class User{
     @Prop({type:Date })
     otpExpiry:Date;
 
-   @Prop({typr:Boolean , default:false})
+   @Prop({type:Boolean , default:false})
    isVerified :boolean;
+
+   @Prop({type:String , enum:["local" , "google"] , default:"local"})
+   userAgent:string;
+
 }
 
 export const userSchema = SchemaFactory.createForClass(User);

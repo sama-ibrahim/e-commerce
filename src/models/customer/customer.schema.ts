@@ -15,6 +15,7 @@ export class Customer {
   otp:string;
   otpExpiry:Date;
   isVerified:boolean;
+  userAgent:string;
 
   @Prop({type:Date})
   dob:Date;

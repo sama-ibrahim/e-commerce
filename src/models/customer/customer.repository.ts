@@ -9,5 +9,9 @@ export class CustomerRepository extends AbstractRepository<Customer>{
     constructor(@InjectModel(Customer.name) private readonly customerModel :Model<Customer>){
         super(customerModel)
     }
+
+    async findOneAndUpdate (filter: object, update: object, p0: { new: boolean; }){
+        return this.customerModel.findOneAndUpdate(filter,update,{new:true})
+    }
 }
     
