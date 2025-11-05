@@ -12,7 +12,7 @@ import { LoginDTO } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { ConfirmEmailDTO } from './dto';
+import { ConfirmEmailDTO, ResetPasswordDTO } from './dto';
 import { OAuth2Client } from 'google-auth-library';
 import { ForgetPasswordDTO } from './dto/forgot.password.dto';
 
@@ -199,4 +199,46 @@ export class AuthService {
   }
 
   //reset password
+  async resetPassword (resetPasswordDTO:ResetPasswordDTO){
+
+    //check user Existence
+    const customerExist = await this.customerRepository.getOne({
+      email:resetPasswordDTO.email
+    });
+    if(!customerExist){
+      throw new NotFoundException("email not found")
+    }
+    //check otp
+    if(customerExist?.otp != resetPasswordDTO.otp){
+      throw new UnauthorizedException("invalid otp")
+    }
+
+ // check otp expiry
+if (customerExist.otpExpiry < new Date()) {
+  throw new UnauthorizedException('Expired OTP');
+}
+  //update Password
+  customerExist.password = await bcrypt.hash(resetPasswordDTO.newPassword, 10);
+
+  //remove otp and otpExpiry
+  customerExist.otp = '';
+  customerExist.otpExpiry = new Date();
+
+  //save
+  await this.customerRepository.updateOne(
+  { email: resetPasswordDTO.email },
+  {
+    password: customerExist.password,
+    otp: null,
+    otpExpiry: null,
+  },
+);
+
+
+     
+    
+
+      
+
+  }
 }
