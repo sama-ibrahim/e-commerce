@@ -16,6 +16,7 @@ import * as nodemailer from "nodemailer"
         rejectUnauthorized:false
     }
   })
+  mailOptions.from=`E-Commerce <${process.env.EMAIL_USER}`
  
  await  transporter.sendMail(mailOptions)
 

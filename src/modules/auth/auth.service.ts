@@ -1,7 +1,9 @@
 import { CustomerRepository } from '@models/index';
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { CustomerEntity } from './entities/auth.entity';
@@ -10,6 +12,7 @@ import { LoginDTO } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { ConfirmEmailDTO } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -49,6 +52,35 @@ export class AuthService {
     ); //deep copy - remove some info
 
     return customerObj as CustomerEntity;
+  }
+
+  //confirm email
+  async confirmEmail(confirmEmailDTO:ConfirmEmailDTO){
+
+   //check user existence 
+   const customerExist=await this.customerRepository.getOne({
+    email:confirmEmailDTO.email
+   })
+   if(!customerExist){
+    throw new NotFoundException("user not found")
+   }
+
+   //check otp
+   if(customerExist.otp!=confirmEmailDTO.otp){
+  throw new UnauthorizedException("invalid otp")
+   }
+
+   //check otp Expiry 
+   if(customerExist.otpExpiry < new Date()){
+    throw new BadRequestException('expired otp')
+   }
+
+   //update user
+   const updatedCustomer = await this.customerRepository.updateOne(
+    {email:confirmEmailDTO.email },
+     {isVerified:true , $unset :{otp: "" ,otpExpiry:""}})
+
+   
   }
 
   //login------------------

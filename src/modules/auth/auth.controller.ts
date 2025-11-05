@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { RegisterDTO } from './dto';
 import { AuthFactoryService } from './factory';
 import { LoginDTO } from './dto/login.dto';
+import { ConfirmEmailDTO } from './dto/confirm.email.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,6 +22,16 @@ export class AuthController {
       data: createdCustomer,
     };
   }
+  
+    @Post('/confirm-email')
+    async confirmEmail(@Body()  confirmEmailDTO:ConfirmEmailDTO){
+       const customer = await this.authService.confirmEmail(confirmEmailDTO);
+       return {
+        message:"email confirmed successfully",
+        success:true,
+        
+       }
+    }
 
   @Post('/login')
   async login(@Body() loginDTO: LoginDTO) {
@@ -31,4 +42,6 @@ export class AuthController {
       data: { token },
     };
   }
+
+
 }
