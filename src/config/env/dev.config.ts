@@ -5,11 +5,12 @@ export default () =>({
         url:process.env.DB_URL ,
 
     },
-    tokenAccess:{
-
+    access:{
+     jwt_secret:process.env.JWT_SECRET,
     },
     cloud:{
-
+       
+        apiKey:process.env.API_KEY,
     }
 
 })
