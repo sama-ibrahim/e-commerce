@@ -1,23 +1,65 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { Category } from './entities/category.entity';
+import { CategoryRepository } from '@models/index';
 
 @Injectable()
 export class CategoryService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  constructor(private readonly categoryRepository: CategoryRepository) {}
+
+  //create
+
+  async create(category: Category) {
+    const categoryExist = await this.categoryRepository.getOne({
+      slug: category.slug,
+    });
+    // fail case
+    if (categoryExist) throw new ConflictException('category already exists ');
+    //success
+    return await this.categoryRepository.create(category);
   }
 
   findAll() {
     return `This action returns all category`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  // find one
+
+  async findOne(id: string) {
+    const category = await this.categoryRepository.getOne(
+      { _id: id },
+      {},
+      {
+        populate: [
+          { path: 'createdBy', select: '-password -otp -otpExpiry' },
+          { path: 'updatedBy' ,select: '-password -otp -otpExpiry'},
+        ],
+      },
+    );
+    if (!category) {
+      throw new NotFoundException('category does not exist');
+    }
+    return category;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  //update
+
+  async update(id: string, category: Category) {
+    const categoryExist = await this.categoryRepository.getOne({
+      slug: category.slug,
+      _id: { $ne: id },
+    });
+    if (categoryExist) {
+      throw new ConflictException('category already exists!');
+    }
+    return await this.categoryRepository.updateOne({ _id: id }, category, {
+      new: true,
+    });
   }
 
   remove(id: number) {

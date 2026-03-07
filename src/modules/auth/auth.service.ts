@@ -1,4 +1,4 @@
-import { CustomerRepository } from '@models/index';
+import { CustomerRepository, UserRepository } from '@models/index';
 import {
   BadRequestException,
   ConflictException,
@@ -20,6 +20,7 @@ import { ForgetPasswordDTO } from './dto/forgot.password.dto';
 export class AuthService {
   constructor(
     private readonly customerRepository: CustomerRepository,
+    private readonly userRepository:UserRepository,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
   ) {}
@@ -89,7 +90,7 @@ export class AuthService {
 
   async login(loginDTO: LoginDTO) {
     //check email
-    const customerExist = await this.customerRepository.getOne({
+    const customerExist = await this.userRepository.getOne({
       email: loginDTO.email,
     });
 
