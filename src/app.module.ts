@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BrandModule } from './modules/brand/brand.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
+import { CommonModule } from '@shared/modules';
 
 @Module({
   imports: [
@@ -22,7 +23,21 @@ import { ProductModule } from './modules/product/product.module';
       }),
     }),
 
-    // MongooseModule.forFeature([
+    
+    CommonModule,
+    AuthModule,
+    ProductModule,
+    CategoryModule,
+    BrandModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+
+
+// MongooseModule.forFeature([
     //   { name: User.name, schema: userSchema,
     //      discriminators: [
     //       {
@@ -37,13 +52,3 @@ import { ProductModule } from './modules/product/product.module';
 
     //     ] },
     // ]),
-
-    AuthModule,
-    ProductModule,
-    CategoryModule,
-    BrandModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
-})
-export class AppModule {}

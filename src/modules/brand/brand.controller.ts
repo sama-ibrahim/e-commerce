@@ -1,18 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { BrandFactoryService } from './factory/brand.factory';
+import { Auth, User } from '@common/decorators';
+import { message } from '@common/constant';
 
 @Controller('brand')
+@Auth(['Admin'])
 export class BrandController {
-  constructor(private readonly brandService: BrandService,
-              private readonly brandFactoryService:BrandFactoryService
+  constructor(
+    private readonly brandService: BrandService,
+    private readonly brandFactoryService: BrandFactoryService,
   ) {}
 
+  // create
+
   @Post()
-  create(@Body() createBrandDto: CreateBrandDto) {
-    return this.brandService.create(createBrandDto);
+  async create(@Body() createBrandDto: CreateBrandDto, @User() user: any) {
+    const brand = this.brandFactoryService.createBrand(createBrandDto, user);
+    const createdBrand =await this.brandService.create(brand);
+    return {
+      success: true,
+      message: message.Brand.created,
+      data: createdBrand,
+    };
   }
 
   @Get()
