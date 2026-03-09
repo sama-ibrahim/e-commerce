@@ -1,20 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ConfigService } from '@nestjs/config';
-import { AdminRepository, CustomerRepository, SellerRepository } from '@models/index';
- 
+import { ProductRepository } from '@models/index';
+import { Product } from './entities/product.entity';
+import { CategoryService } from '@modules/category/category.service';
+import { BrandService } from '@modules/brand/brand.service';
+
 @Injectable()
 export class ProductService {
-  constructor(private readonly configService :ConfigService,
-             private readonly sellerRepository :SellerRepository,
-             private readonly adminRepository :AdminRepository,
-             private readonly customerRepository :CustomerRepository
-  ){
+  constructor(private readonly productRepository: ProductRepository,
+              private readonly categoryService:CategoryService,
+              private readonly brandService:BrandService ,
+             
+  ) {}
 
-  }
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+
+  //create
+ async create(product: Product) {
+    // check category existence
+ await this.categoryService.findOne(product.categoryId)
+
+    //check brand existence
+  await this.brandService.findOne(product.brandId)
+
+  return await this.productRepository.create(product)
   }
 
   findAll() {

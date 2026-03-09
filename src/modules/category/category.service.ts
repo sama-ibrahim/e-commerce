@@ -7,6 +7,8 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities/category.entity';
 import { CategoryRepository } from '@models/index';
+import { Types } from 'mongoose';
+import { MESSAGE } from '@common/constant';
 
 @Injectable()
 export class CategoryService {
@@ -19,7 +21,7 @@ export class CategoryService {
       slug: category.slug,
     });
     // fail case
-    if (categoryExist) throw new ConflictException('category already exists ');
+    if (categoryExist) throw new ConflictException(MESSAGE.Category.alreadyExist);
     //success
     return await this.categoryRepository.create(category);
   }
@@ -30,7 +32,7 @@ export class CategoryService {
 
   // find one
 
-  async findOne(id: string) {
+  async findOne(id: string | Types.ObjectId) {
     const category = await this.categoryRepository.getOne(
       { _id: id },
       {},
@@ -42,7 +44,7 @@ export class CategoryService {
       },
     );
     if (!category) {
-      throw new NotFoundException('category does not exist');
+      throw new NotFoundException(MESSAGE.Category.notFound);
     }
     return category;
   }

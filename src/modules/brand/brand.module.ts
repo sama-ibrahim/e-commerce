@@ -14,5 +14,6 @@ import { UserMongoModule } from '@shared/index';
   ],
   controllers: [BrandController],
   providers: [BrandService , BrandFactoryService, BrandRepository ],
+  exports:[BrandService , BrandFactoryService, BrandRepository]
 })
 export class BrandModule {}

@@ -12,7 +12,7 @@ import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { BrandFactoryService } from './factory/brand.factory';
 import { Auth, User } from '@common/decorators';
-import { message } from '@common/constant';
+import { MESSAGE } from '@common/constant';
 
 @Controller('brand')
 @Auth(['Admin'])
@@ -30,7 +30,7 @@ export class BrandController {
     const createdBrand =await this.brandService.create(brand);
     return {
       success: true,
-      message: message.Brand.created,
+      message: MESSAGE.Brand.created,
       data: createdBrand,
     };
   }
@@ -42,16 +42,16 @@ export class BrandController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.brandService.findOne(+id);
+    return this.brandService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
-    return this.brandService.update(+id, updateBrandDto);
-  }
+//   @Patch(':id')
+//   update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
+//     return this.brandService.update(id, updateBrandDto);
+//   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.brandService.remove(+id);
-  }
-}
+//   @Delete(':id')
+//   remove(@Param('id') id: string) {
+//     return this.brandService.remove(id);
+//   }
+ }

@@ -13,7 +13,7 @@ const generateMessage = (entity: string) => ({
   FailToDelete: `Failed to delete ${entity}`,
 });
 
-export const message = {
+export const MESSAGE = {
   Category: { ...generateMessage('Category') },
   Brand: { ...generateMessage('Brand') },
   Product: { ...generateMessage('Product') },

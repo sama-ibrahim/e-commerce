@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory, Virtual } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
 
-enum DiscountType {
+export enum DiscountType {
   fixed_amount = 'fixed_amount',
   percentage = 'percentage',
 }
@@ -40,7 +40,7 @@ export class Product {
   @Prop({ type: Number, required: true, min: 1 }) // avoid negative
   price: number;
 
-  @Prop({ type: Number, default: 0, min: 1 })
+  @Prop({ type: Number, default: 0, min: 0 })
   discountAmount: number;
 
   @Prop({
