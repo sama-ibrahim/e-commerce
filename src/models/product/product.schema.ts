@@ -36,7 +36,7 @@ export class Product {
   updatedBy: Types.ObjectId;
 
   //=============numbers
-  A;
+
   @Prop({ type: Number, required: true, min: 1 }) // avoid negative
   price: number;
 
@@ -68,10 +68,10 @@ export class Product {
   //=============specifications (optional)
 
   @Prop({ type: [String] })
-  color: string[]; // red - green
+  colors: string[]; // red - green
 
   @Prop([String])
-  size: string[]; //s - m - l
+  sizes: string[]; //s - m - l
 }
 
 export const productSchema = SchemaFactory.createForClass(Product);

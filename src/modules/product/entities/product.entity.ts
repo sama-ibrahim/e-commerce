@@ -30,7 +30,7 @@ export class Product {
 
   sold: number;
 
-  color: string[];
+  colors: string[];
 
-  size: string[];
+  sizes: string[];
 }

@@ -10,9 +10,11 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Auth, User } from '@common/decorators';
-import { ProductFactoryService } from './entities/product.factory';
+import { Auth, Public, User } from '@common/decorators';
+
 import { MESSAGE } from '@common/constant';
+import { ProductFactoryService } from './factory/product.factory';
+import { Product } from './entities';
 
 @Controller('product')
 @Auth(['Admin', 'Seller'])
@@ -30,7 +32,7 @@ export class ProductController {
       createProductDto,
       user,
     );
-    const createdProduct = await this.productService.create(product);
+    const createdProduct = await this.productService.create(product, user);
     return {
       success: true,
       message: MESSAGE.Product.created,
@@ -43,14 +45,22 @@ export class ProductController {
     return this.productService.findAll();
   }
 
+  // findone
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+  @Public()
+  async findOne(@Param('id') id: string) {
+   const product = await this.productService.findOne(id);
+   return {
+    success: true ,
+    data:product
+   }
   }
 
+ // update
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  update(@Param('id') id: string, product: Product) {
+    return this.productService.update(id, product);
   }
 
   @Delete(':id')

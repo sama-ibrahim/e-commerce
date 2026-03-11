@@ -1,7 +1,7 @@
 import slugify from "slugify";
 import { CreateProductDto } from "../dto/create-product.dto";
-import { Product } from "./product.entity";
 import { Types } from "mongoose";
+import { Product } from "../entities";
 
 
 export class ProductFactoryService{
@@ -23,8 +23,8 @@ export class ProductFactoryService{
     product.stock=CreateProductDto.stock;
     product.sold=0;
 
-    product.color=CreateProductDto.color;
-    product.size=CreateProductDto.size;
+    product.colors=CreateProductDto.colors;
+    product.sizes=CreateProductDto.sizes;
 
     return product;
     }
