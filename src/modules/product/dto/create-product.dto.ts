@@ -1,4 +1,5 @@
-import { DiscountType } from '@models/index';
+import { IsValidDiscount } from '@common/decorators/discount.decorator';
+import { DiscountType } from '@common/types';
 import {
   IsArray,
   IsEnum,
@@ -34,8 +35,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   price: number;
 
-  @IsNumber()
-  @IsOptional()
+  @IsValidDiscount()
   discountAmount: number;
 
   @IsString()

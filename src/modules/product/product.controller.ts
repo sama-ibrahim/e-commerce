@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -15,8 +16,10 @@ import { Auth, Public, User } from '@common/decorators';
 import { MESSAGE } from '@common/constant';
 import { ProductFactoryService } from './factory/product.factory';
 import { Product } from './entities';
+import { TransformInterceptor } from '@common/interceptors';
 
 @Controller('product')
+@UseInterceptors(new TransformInterceptor<Product>())
 @Auth(['Admin', 'Seller'])
 export class ProductController {
   constructor(
@@ -52,7 +55,8 @@ export class ProductController {
    const product = await this.productService.findOne(id);
    return {
     success: true ,
-    data:product
+    data:product , 
+ 
    }
   }
 

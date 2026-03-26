@@ -1,6 +1,6 @@
  
 
-const generateMessage = (entity: string) => ({
+const generateMessage = <T>(entity: string) => ({
   notFound: `${entity} not Found`,
   alreadyExist: `${entity} already exists`,
 

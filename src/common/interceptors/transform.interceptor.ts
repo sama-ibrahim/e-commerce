@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Response<T> {
+  success: boolean;
+  message: string;
   data: T;
 }
 
@@ -20,9 +22,11 @@ export class TransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map((data) => {
-        return { success: true, data };
-      }),
+      map((response: any) => ({
+        success: true,
+        message: response.message ||'Done',
+        data: response.data,
+      })),
     );
   }
 }

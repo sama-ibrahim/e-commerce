@@ -18,3 +18,7 @@ export * from "./brand/brand.schema"
 
 export * from "./product/product.repository";
 export * from "./product/product.schema"
+
+export * from "./coupon/coupon.repository"
+export * from "./coupon/coupon.schema"
+
