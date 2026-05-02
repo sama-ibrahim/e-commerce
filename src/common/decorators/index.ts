@@ -3,3 +3,5 @@ export * from "./public.decorator"
 
 export * from "./user.decorator"
 export * from "./auth.decorator"
+
+export * from "./validate-data.decorator"

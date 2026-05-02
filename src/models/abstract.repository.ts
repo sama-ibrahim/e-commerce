@@ -1,7 +1,7 @@
 import { Model, ProjectionType, QueryOptions, RootFilterQuery, UpdateQuery } from 'mongoose';
 
 export class AbstractRepository<T> {
-  constructor(private readonly model: Model<T>) {}
+  constructor(private readonly model: Model<any>) {}
 
   public async create(item: Partial<T>) {
     const doc = new this.model(item);

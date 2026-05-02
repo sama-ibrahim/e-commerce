@@ -4,7 +4,11 @@ import { SchemaTypes, Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class UserCoupon {
+
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'User' })
   customerId: Types.ObjectId;
+  
+  @Prop({ type: Number })
   count: number;
 }
 @Schema({ timestamps: true })
@@ -39,10 +43,10 @@ export class Coupon {
   @Prop({ type: Boolean, default: true })
   active: boolean;
 
-  @Prop({ type: UserCoupon })
+  @Prop({ type: [UserCoupon] })
   usedBy: UserCoupon[];
 
-  @Prop({ type: UserCoupon })
+  @Prop({ type: [UserCoupon] })
   assignedTo: UserCoupon[];
 }
 

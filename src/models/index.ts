@@ -22,3 +22,5 @@ export * from "./product/product.schema"
 export * from "./coupon/coupon.repository"
 export * from "./coupon/coupon.schema"
 
+export * from "./cart/cart.repository"
+export * from "./cart/cart.schema"

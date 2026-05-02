@@ -5,6 +5,7 @@ import {
   ValidationOptions,
 } from 'class-validator';
 
+// checks discountAmount based on discountType
 export function IsValidDiscount(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
@@ -15,7 +16,7 @@ export function IsValidDiscount(validationOptions?: ValidationOptions) {
 
       validator: {
         validate(value: any, args: ValidationArguments) {
-          const obj = args.object as any;
+          const obj = args.object as any; // entire DTO instance
           const { discountType } = obj;
 
           if (discountType === DiscountType.percentage) {

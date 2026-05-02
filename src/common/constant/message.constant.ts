@@ -18,4 +18,6 @@ export const MESSAGE = {
   Brand: { ...generateMessage('Brand') },
   Product: { ...generateMessage('Product') },
   Coupon: { ...generateMessage('Coupon') },
+  Cart: { ...generateMessage('Cart') },
+  
 };
