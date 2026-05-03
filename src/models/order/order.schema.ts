@@ -1,6 +1,7 @@
 import { OrderStatus, PaymentMethod } from '@common/types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
+import { string } from 'zod';
 @Schema()
 export class OrderProduct {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Product', required: true })
@@ -29,10 +30,12 @@ export class Address {
 }
 @Schema()
 export class CouponDetails {
-    @Prop({type :SchemaTypes.ObjectId , ref :'Coupon' , required:true})
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Coupon', required: true })
   couponId: Types.ObjectId;
-  @Prop({type :Number , required:true})
+  @Prop({ type: Number, required: true })
   discountAmount: number;
+  @Prop({ type: String })
+  code: string;
 }
 
 @Schema({ timestamps: true })
@@ -44,23 +47,27 @@ export class Order {
   @Prop({ type: Address, required: true })
   address: Address;
 
-  @Prop({ type: [OrderProduct] , required:true })
+  @Prop({ type: [OrderProduct], required: true })
   products: OrderProduct[];
-  @Prop({type: String , enum :PaymentMethod , default : PaymentMethod.COD})
+  @Prop({ type: String, enum: PaymentMethod, default: PaymentMethod.COD })
   paymentMethod: PaymentMethod;
 
-@Prop({type :String , enum:OrderStatus , default : function(){
-    if(this.paymentMethod === PaymentMethod.COD){
+  @Prop({
+    type: String,
+    enum: OrderStatus,
+    default: function () {
+      if (this.paymentMethod === PaymentMethod.COD) {
         return OrderStatus.PENDING;
-    }
-    return OrderStatus.PLACED;
-}})
+      }
+      return OrderStatus.PLACED;
+    },
+  })
   status: OrderStatus;
 
-  @Prop({type: CouponDetails})
+  @Prop({ type: CouponDetails })
   coupon: CouponDetails;
 
-  @Prop({type: Number, required: true})
+  @Prop({ type: Number, required: true })
   totalAmount: number;
 }
 
