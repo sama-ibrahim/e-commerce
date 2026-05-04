@@ -10,6 +10,7 @@ import { UserMongoModule } from '@shared/modules';
   imports:[ProductModule,MongooseModule.forFeature([{name: Cart.name, schema:cartSchema}]),UserMongoModule],
   
   controllers: [CartController],
-  providers: [CartService,CartRepository]
+  providers: [CartService,CartRepository],
+  exports:[CartService,CartRepository]
 })
 export class CartModule {}

@@ -8,6 +8,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class AddressDto {
   @IsString()
@@ -24,7 +25,7 @@ export class AddressDto {
 
 class CouponDetail {
   @IsMongoId()
-  couponId: string;
+  couponId: Types.ObjectId;
   @IsNumber()
   discountAmount: number;
 @IsString()
@@ -40,6 +41,7 @@ export class CreateOrderDto {
   paymentMethod: PaymentMethod;
 
   @IsObject()
+  @IsOptional()
   couponDetails: CouponDetail;
 //   products?: {
 //     productId: string;

@@ -5,7 +5,7 @@ import { string } from 'zod';
 @Schema()
 export class OrderProduct {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Product', required: true })
-  productId: string;
+  productId: Types.ObjectId;
   @Prop({ type: Number, required: true })
   quantity: number;
   @Prop({ type: Number, required: true })
@@ -29,7 +29,7 @@ export class Address {
   phoneNumber: string;
 }
 @Schema()
-export class CouponDetails {
+export class CouponDetails{
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Coupon', required: true })
   couponId: Types.ObjectId;
   @Prop({ type: Number, required: true })
@@ -65,7 +65,7 @@ export class Order {
   status: OrderStatus;
 
   @Prop({ type: CouponDetails })
-  coupon: CouponDetails;
+  couponDetails: CouponDetails;
 
   @Prop({ type: Number, required: true })
   totalAmount: number;
